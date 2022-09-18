@@ -17,6 +17,45 @@
 
 - [React Lifecycle Methods Diagram](https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
 - [Go Package - httprouter](https://github.com/julienschmidt/httprouter)
+- [Go Package - pq](https://github.com/lib/pq)
+
+```sh
+# Check user info
+\conninfo
+
+# Login as root
+psql go_movies
+
+# Login to u1
+psql go_movies -U u1
+
+
+# In the folder containing go_movies.sql
+psql -d go_movies -f go_movies.sql
+
+# Go postgres driver
+go get github.com/lib/pq@v1.10.0
+```
+
+```sql
+-- Check users
+\du
+
+-- List of DB user has access to
+\l
+
+-- Create user (Ensure that you're in the correct db!)
+CREATE ROLE u1 with LOGIN PASSWORD 'password';
+ALTER ROLE u1 CREATEDB;
+GRANT CONNECT ON DATABASE go_movies TO u1;
+
+-- GRANT using root account
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO u1;
+
+-- Create DB
+CREATE DATABASE go_movies;
+
+```
 
 &nbsp;
 
