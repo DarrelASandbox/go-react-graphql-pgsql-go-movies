@@ -1,15 +1,15 @@
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-export default class Movies extends Component {
+export default class Genres extends Component {
   state = {
-    movies: [],
+    genres: [],
     isLoaded: false,
     error: null,
   };
 
   componentDidMount() {
-    fetch('/v1/movies')
+    fetch('/v1/genres')
       .then((res) => {
         console.log(`Status code is ${res.status}`);
         if (res.status !== '200') {
@@ -22,7 +22,7 @@ export default class Movies extends Component {
       .then((json) => {
         this.setState(
           {
-            movies: json.movies,
+            movies: json.genres,
             isLoaded: true,
           },
           (error) => {
@@ -36,17 +36,15 @@ export default class Movies extends Component {
   }
 
   render() {
-    const { movies, isLoaded, error } = this.state;
-    if (error) return <p>{error.message}</p>;
-    if (!isLoaded) return <p>Loading...</p>;
+    const { genres, isLoaded, error } = this.state;
 
     return (
       <>
-        <h2>Choose a movie</h2>
+        <h2>Genres</h2>
         <ul>
-          {movies.map((movie) => (
+          {genres.map((movie) => (
             <li key={movie.id}>
-              <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
+              <Link to={`/genre/${movie.id}`}>{movie.genre_name}</Link>
             </li>
           ))}
         </ul>
