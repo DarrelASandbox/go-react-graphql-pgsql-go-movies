@@ -11,7 +11,7 @@ func (app *application) routes() *httprouter.Router {
 
 	router.HandlerFunc(http.MethodGet, "/status", app.statusHandler)
 	router.HandlerFunc(http.MethodGet, "/v1/movie/:id", app.getMovie)
-	router.HandlerFunc(http.MethodGet, "/movies", app.getAllMovies)
+	router.HandlerFunc(http.MethodGet, "/v1/movies", app.getAllMovies)
 
 	return router
 }
