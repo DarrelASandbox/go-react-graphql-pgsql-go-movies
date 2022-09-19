@@ -10,7 +10,9 @@ import (
 
 func (app *application) wrap(next http.Handler) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+		// pass httprouter.Params to request context
 		ctx := context.WithValue(r.Context(), "params", ps)
+		// call next middleware with new context
 		next.ServeHTTP(w, r.WithContext(ctx))
 	}
 }

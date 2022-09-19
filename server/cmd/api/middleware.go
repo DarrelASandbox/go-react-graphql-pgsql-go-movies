@@ -41,28 +41,28 @@ func (app *application) checkToken(next http.Handler) http.Handler {
 		token := headerParts[1]
 		claims, err := jwt.HMACCheck([]byte(token), []byte(app.config.jwt.secret))
 		if err != nil {
-			app.errorJSON(w, errors.New("invalid credentials"))
+			app.errorJSON(w, errors.New("invalid credentials"), http.StatusForbidden)
 			return
 		}
 
 		if !claims.Valid(time.Now()) {
-			app.errorJSON(w, errors.New("invalid credentials"))
+			app.errorJSON(w, errors.New("invalid credentials"), http.StatusForbidden)
 			return
 		}
 
 		if !claims.AcceptAudience("mydomain.com") {
-			app.errorJSON(w, errors.New("invalid audience"))
+			app.errorJSON(w, errors.New("invalid audience"), http.StatusForbidden)
 			return
 		}
 
 		if claims.Issuer != "mydomain.com" {
-			app.errorJSON(w, errors.New("invalid issuer"))
+			app.errorJSON(w, errors.New("invalid issuer"), http.StatusForbidden)
 			return
 		}
 
 		userID, err := strconv.ParseInt(claims.Subject, 10, 64)
 		if err != nil {
-			app.errorJSON(w, errors.New("invalid credentials"))
+			app.errorJSON(w, errors.New("invalid credentials"), http.StatusForbidden)
 			return
 		}
 

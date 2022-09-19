@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 	"server/models"
 	"strconv"
@@ -18,7 +19,6 @@ type jsonResp struct {
 
 func (app *application) getMovie(w http.ResponseWriter, r *http.Request) {
 	params := httprouter.ParamsFromContext(r.Context())
-
 	id, err := strconv.Atoi(params.ByName("id"))
 	if err != nil {
 		app.logger.Print(errors.New("invalid id parameter"))
@@ -157,6 +157,10 @@ func (app *application) deleteMovie(w http.ResponseWriter, r *http.Request) {
 	params := httprouter.ParamsFromContext(r.Context())
 
 	id, err := strconv.Atoi(params.ByName("id"))
+
+	// @TODO: Fix bug `:id`
+	fmt.Println(params)
+
 	if err != nil {
 		app.errorJSON(w, err)
 		return
