@@ -6,4 +6,9 @@ import Home from './Home';
 import Movie from './Movie';
 import Movies from './Movies';
 
+import Input from './form/Input';
+import Select from './form/Select';
+import TextArea from './form/TextArea';
+
 export { Movie, Movies, Admin, Home, Genres, Genre, EditMovie };
+export { Input, TextArea, Select };
