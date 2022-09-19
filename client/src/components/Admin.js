@@ -9,9 +9,13 @@ export default class Admin extends Component {
   };
 
   componentDidMount() {
+    if (this.props.jwt === '') {
+      this.props.history.push({ pathname: '/login' });
+      return;
+    }
+
     fetch('/v1/movies')
       .then((res) => {
-        console.log(`Status code is ${res.status}`);
         if (res.status !== '200') {
           let err = Error;
           err.message = 'Invalid response code: ' + res.status;

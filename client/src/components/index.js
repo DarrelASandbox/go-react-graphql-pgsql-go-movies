@@ -3,6 +3,7 @@ import EditMovie from './EditMovie';
 import Genre from './Genre';
 import Genres from './Genres';
 import Home from './Home';
+import Login from './Login';
 import Movie from './Movie';
 import Movies from './Movies';
 
@@ -12,6 +13,6 @@ import TextArea from './form/TextArea';
 
 import Alert from './ui/Alert';
 
-export { Movie, Movies, Admin, Home, Genres, Genre, EditMovie };
+export { Login, Movie, Movies, Admin, Home, Genres, Genre, EditMovie };
 export { Input, TextArea, Select };
 export { Alert };

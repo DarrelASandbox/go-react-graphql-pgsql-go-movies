@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"errors"
-	"log"
 	"net/http"
 	"server/models"
 	"strconv"
@@ -14,7 +13,7 @@ import (
 
 type jsonResp struct {
 	OK      bool   `json:"ok"`
-	Message string `json:"message`
+	Message string `json:"message"`
 }
 
 func (app *application) getMovie(w http.ResponseWriter, r *http.Request) {
@@ -105,7 +104,6 @@ func (app *application) editMovie(w http.ResponseWriter, r *http.Request) {
 	var payload MoviePayload
 	err := json.NewDecoder(r.Body).Decode(&payload)
 	if err != nil {
-		log.Println(err)
 		app.errorJSON(w, err)
 		return
 	}
@@ -157,6 +155,7 @@ func (app *application) editMovie(w http.ResponseWriter, r *http.Request) {
 
 func (app *application) deleteMovie(w http.ResponseWriter, r *http.Request) {
 	params := httprouter.ParamsFromContext(r.Context())
+
 	id, err := strconv.Atoi(params.ByName("id"))
 	if err != nil {
 		app.errorJSON(w, err)
