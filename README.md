@@ -18,6 +18,7 @@
 - [React Lifecycle Methods Diagram](https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
 - [Go Package - httprouter](https://github.com/julienschmidt/httprouter)
 - [Go Package - pq](https://github.com/lib/pq)
+- [PostgreSQL - format specifiers](https://www.postgresql.org/docs/14/ecpg-pgtypes.html)
 
 ```sh
 # Check user info

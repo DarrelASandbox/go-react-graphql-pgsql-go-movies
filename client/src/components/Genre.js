@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 
 export default class Genres extends Component {
   state = {
-    genres: [],
+    movies: [],
     isLoaded: false,
     error: null,
+    genreName: '',
   };
 
   componentDidMount() {
-    fetch('/v1/genres')
+    fetch(`/v1/movies/${this.props.match.params.id}`)
       .then((res) => {
         console.log(`Status code is ${res.status}`);
         if (res.status !== '200') {
@@ -22,8 +23,9 @@ export default class Genres extends Component {
       .then((json) => {
         this.setState(
           {
-            genres: json.genres,
+            movies: json.movies,
             isLoaded: true,
+            genreName: this.props.location.genreName,
           },
           (error) => {
             this.setState({
@@ -36,24 +38,21 @@ export default class Genres extends Component {
   }
 
   render() {
-    const { genres, isLoaded, error } = this.state;
+    let { movies, isLoaded, error, genreName } = this.state;
+    if (!movies) movies = [];
     if (error) return <p>{error.message}</p>;
     if (!isLoaded) return <p>Loading...</p>;
 
     return (
       <>
-        <h2>Genres</h2>
+        <h2>Genre: {genreName}</h2>
         <div className="list-group">
-          {genres.map((movie) => (
+          {movies.map((movie) => (
             <Link
-              key={movie.id}
-              to={{
-                pathname: `/genre/${movie.id}`,
-                genreName: movie.genre_name,
-              }}
+              to={`/movies/${movie.id}`}
               className="list-group-item list-group-item-action"
             >
-              {movie.genre_name}
+              {movie.title}
             </Link>
           ))}
         </div>

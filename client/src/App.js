@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
-import { Admin, Genres, Home, Movie, Movies } from './components';
+import { Admin, Genre, Genres, Home, Movie, Movies } from './components';
 
 function App() {
   return (
@@ -40,6 +40,8 @@ function App() {
               <Route path="/movies">
                 <Movies />
               </Route>
+
+              <Route path="/genre/:id" component={Genre} />
 
               <Route exact path="/genres">
                 <Genres />
