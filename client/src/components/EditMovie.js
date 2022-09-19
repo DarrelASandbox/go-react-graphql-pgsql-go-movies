@@ -1,6 +1,10 @@
 import { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-import { Input, Select, TextArea, Alert } from './';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+
+import { Alert, Input, Select, TextArea } from './';
 
 export default class EditMovie extends Component {
   state = {
@@ -73,10 +77,31 @@ export default class EditMovie extends Component {
           ? this.setState({
               alert: { type: 'alert-danger', message: data.error.message },
             })
-          : this.setState({
-              alert: { type: 'alert-success', message: 'Changes save!' },
-            });
+          : this.props.history.push({ pathname: '/admin' });
       });
+  };
+
+  confirmDelete = (e) => {
+    confirmAlert({
+      title: 'Delete movie?',
+      message: 'Are you sure?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () =>
+            fetch(`/v1/admin/deletemovie/${this.state.movie.id}`, { method: 'DELETE' })
+              .then((res) => res.json)
+              .then((data) => {
+                data.error
+                  ? this.setState({
+                      alert: { type: 'alert-danger', message: data.error.message },
+                    })
+                  : this.props.history.push({ pathname: '/admin' });
+              }),
+        },
+        { label: 'No', onClick: () => {} },
+      ],
+    });
   };
 
   componentDidMount() {
@@ -188,6 +213,18 @@ export default class EditMovie extends Component {
           <hr />
 
           <button className="btn btn-primary">Save</button>
+          <Link to="/admin" className="btn btn-warning ms-1">
+            Cancel
+          </Link>
+          {movie.id > 0 && (
+            <a
+              href="#!"
+              onClick={() => this.confirmDelete()}
+              className="btn btn-danger ms-1"
+            >
+              Delete
+            </a>
+          )}
         </form>
       </>
     );
