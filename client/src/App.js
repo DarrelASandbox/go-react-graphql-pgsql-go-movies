@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
-import { Admin, Genre, Genres, Home, Movie, Movies } from './components';
+import { Admin, EditMovie, Genre, Genres, Home, Movie, Movies } from './components';
 
 function App() {
   return (
@@ -27,6 +27,10 @@ function App() {
                 </li>
 
                 <li className="list-group-item">
+                  <Link to="/admin/add">Add Movie</Link>
+                </li>
+
+                <li className="list-group-item">
                   <Link to="/admin">Manage Catalogue</Link>
                 </li>
               </ul>
@@ -46,6 +50,8 @@ function App() {
               <Route exact path="/genres">
                 <Genres />
               </Route>
+
+              <Route path="/admin/add" component={EditMovie} />
 
               <Route path="/admin">
                 <Admin />
