@@ -82,8 +82,8 @@ func (m *DBModel) All(genre ...int) ([]*Movie, error) {
 	}
 
 	query := fmt.Sprintf(`SELECT 
-							id, title, description, year, release_date, rating, runtime,
-							mpaa_rating, created_at, updated_at FROM movies %s ORDER BY title`, where)
+													id, title, description, year, release_date, rating, runtime, mpaa_rating,
+													created_at, updated_at FROM movies %s ORDER BY title`, where)
 
 	rows, err := m.DB.QueryContext(ctx, query)
 	if err != nil {
@@ -175,4 +175,60 @@ func (m *DBModel) GenresAll() ([]*Genre, error) {
 	}
 
 	return genres, nil
+}
+
+func (m *DBModel) InsertMovie(movie Movie) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	statement := `INSERT INTO movies (title, description, year, release_date, runtime, rating,
+									mpaa_rating, created_at, updated_at) values($1, $2, $3, $4, $5, $6, $7, $8, $9)`
+
+	_, err := m.DB.ExecContext(
+		ctx,
+		statement,
+		movie.Title,
+		movie.Description,
+		movie.Year,
+		movie.ReleaseDate,
+		movie.Runtime,
+		movie.Rating,
+		movie.MPAARating,
+		movie.CreatedAt,
+		movie.UpdatedAt,
+	)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *DBModel) UpdateMovie(movie Movie) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	statement := `UPDATE movies SET title = $1, description = $2, year = $3, release_date = $4, runtime = $5, rating = $6,
+									mpaa_rating = $7, updated_at = $8 WHERE id = $9`
+
+	_, err := m.DB.ExecContext(
+		ctx,
+		statement,
+		movie.Title,
+		movie.Description,
+		movie.Year,
+		movie.ReleaseDate,
+		movie.Runtime,
+		movie.Rating,
+		movie.MPAARating,
+		movie.UpdatedAt,
+		movie.ID,
+	)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

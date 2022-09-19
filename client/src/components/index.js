@@ -10,5 +10,8 @@ import Input from './form/Input';
 import Select from './form/Select';
 import TextArea from './form/TextArea';
 
+import Alert from './ui/Alert';
+
 export { Movie, Movies, Admin, Home, Genres, Genre, EditMovie };
 export { Input, TextArea, Select };
+export { Alert };
