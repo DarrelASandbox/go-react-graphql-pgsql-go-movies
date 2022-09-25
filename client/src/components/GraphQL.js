@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Input } from './';
 
 export default class GraphQL extends Component {
   constructor(props) {
@@ -12,7 +13,50 @@ export default class GraphQL extends Component {
         type: 'd-none',
         message: '',
       },
+      searchTerm: '',
     };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange = (e) => {
+    let value = e.target.value;
+    this.setState((prevState) => ({ searchTerm: value }));
+    this.performSearch();
+  };
+
+  performSearch() {
+    const payload = `
+    {
+      search(titleContains: "${this.state.searchTerm}") {
+        id
+        title
+        runtime
+        year
+        description
+      }
+    }
+    `;
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    const requestOptions = {
+      method: 'POST',
+      body: payload,
+      headers,
+    };
+
+    fetch('/v1/graphql', requestOptions)
+      .then((res) => res.json())
+      .then((data) => {
+        let theList = Object.values(data.data.search);
+        return theList;
+      })
+      .then((theList) => {
+        console.log(theList);
+        if (theList.length > 0) this.setState({ movies: theList });
+        else this.setState({ movies: [] });
+      });
   }
 
   componentDidMount() {
@@ -38,16 +82,13 @@ export default class GraphQL extends Component {
       headers,
     };
 
-    fetch('/v1/graphql/list', requestOptions)
+    fetch('/v1/graphql', requestOptions)
       .then((res) => res.json())
       .then((data) => {
         let theList = Object.values(data.data.list);
         return theList;
       })
-      .then((theList) => {
-        console.log(theList);
-        this.setState({ movies: theList });
-      });
+      .then((theList) => this.setState({ movies: theList }));
   }
 
   render() {
@@ -57,6 +98,15 @@ export default class GraphQL extends Component {
       <>
         <h2>GraphQL</h2>
         <hr />
+
+        <Input
+          title={'Search'}
+          type={'text'}
+          name={'search'}
+          value={this.state.searchTerm}
+          handleChange={this.handleChange}
+        />
+
         <div className="list-group">
           {movies.map((movie) => (
             <Link
