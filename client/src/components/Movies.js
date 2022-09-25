@@ -11,7 +11,6 @@ export default class Movies extends Component {
   componentDidMount() {
     fetch('/v1/movies')
       .then((res) => {
-        console.log(`Status code is ${res.status}`);
         if (res.status !== '200') {
           let err = Error;
           err.message = 'Invalid response code: ' + res.status;

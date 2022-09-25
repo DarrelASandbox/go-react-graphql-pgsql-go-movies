@@ -5,10 +5,11 @@ import {
   EditMovie,
   Genre,
   Genres,
+  GraphQL,
   Home,
+  Login,
   Movie,
   Movies,
-  Login,
 } from './components';
 
 export default class App extends Component {
@@ -85,6 +86,10 @@ export default class App extends Component {
                       </li>
                     </>
                   )}
+
+                  <li className="list-group-item">
+                    <Link to="/graphql">GraphQL</Link>
+                  </li>
                 </ul>
               </nav>
             </div>
@@ -110,6 +115,10 @@ export default class App extends Component {
                     <Login {...props} handleJWTChange={this.handleJWTChange} />
                   )}
                 />
+
+                <Route exact path="/graphql">
+                  <GraphQL />
+                </Route>
 
                 <Route
                   path="/admin/movie/:id"
