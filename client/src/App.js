@@ -6,6 +6,7 @@ import {
   Genre,
   Genres,
   GraphQL,
+  GraphQLMovie,
   Home,
   Login,
   Movie,
@@ -97,6 +98,7 @@ export default class App extends Component {
             <div className="col-md-10">
               <Switch>
                 <Route path="/movies/:id" component={Movie} />
+                <Route path="/moviesgraphql/:id" component={GraphQLMovie} />
 
                 <Route path="/movies">
                   <Movies />

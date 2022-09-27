@@ -111,7 +111,7 @@ export default class GraphQL extends Component {
           {movies.map((movie) => (
             <Link
               key={movie.id}
-              to={`/movies/${movie.id}`}
+              to={`/moviesgraphql/${movie.id}`}
               className="list-group-item list-group-item-action"
             >
               <strong>{movie.title}</strong>
