@@ -17,6 +17,7 @@
 
 - [React Lifecycle Methods Diagram](https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
 - [PostgreSQL - format specifiers](https://www.postgresql.org/docs/14/ecpg-pgtypes.html)
+- [JSON-to-Go](https://mholt.github.io/json-to-go/)
 
 ```sh
 # Check user info
@@ -53,6 +54,16 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO u1;
 
 -- Create DB
 CREATE DATABASE go_movies;
+
+-- Change ownership
+ALTER TABLE public.movies OWNER TO u1;
+ALTER TABLE public.genres OWNER TO u1;
+ALTER TABLE public.movies_genres OWNER TO u1;
+
+-- For movie poster
+ALTER TABLE movies
+ADD poster character varying;
+
 
 ```
 

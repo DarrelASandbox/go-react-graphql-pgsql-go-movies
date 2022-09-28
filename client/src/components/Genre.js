@@ -48,6 +48,7 @@ export default class Genres extends Component {
         <div className="list-group">
           {movies.map((movie) => (
             <Link
+              key={movie.id}
               to={`/movies/${movie.id}`}
               className="list-group-item list-group-item-action"
             >
