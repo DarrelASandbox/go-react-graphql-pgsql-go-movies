@@ -20,8 +20,10 @@ export default class GraphQL extends Component {
 
   handleChange = (e) => {
     let value = e.target.value;
-    this.setState((prevState) => ({ searchTerm: value }));
-    this.performSearch();
+    this.setState({ searchTerm: value }, () => {
+      if (value.length > 2) this.performSearch();
+      else this.setState({ movies: [] });
+    });
   };
 
   performSearch() {
